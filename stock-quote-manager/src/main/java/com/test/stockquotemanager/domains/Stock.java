@@ -14,7 +14,7 @@ public class Stock {
 	@Id
 	private String id;
 	
-	private Map<String, String> quotes	= new HashMap<>();
+	private Map<String, Integer> quotes	= new HashMap<>();
 
 	public Stock() {
 	}
@@ -31,11 +31,11 @@ public class Stock {
 		this.id = id;
 	}
 
-	public Map<String, String> getQuotes() {
+	public Map<String, Integer> getQuotes() {
 		return quotes;
 	}
 
-	public void setQuotes(Map<String, String> quotes) {
+	public void setQuotes(Map<String, Integer> quotes) {
 		this.quotes = quotes;
 	}
 	
