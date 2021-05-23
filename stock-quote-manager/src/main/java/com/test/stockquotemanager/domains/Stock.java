@@ -32,15 +32,8 @@ public class Stock implements Serializable {
     @Column(updatable = false, unique = true)
 	private String id;
 	
-	//@JsonDeserialize(using = ArrayMapDeserializer.class)
-	//@ElementCollection(targetClass=ArrayMapDeserializer.class)
-	//@MapKeyColumn(name="Employee_Position")
-	//private Map<String, String> quotes = new HashMap<>();//TODO change key to Date and value to Double
-	
-	//@JsonManagedReference
-	//@JsonIgnore
 	@OneToMany(mappedBy="stock", fetch=FetchType.EAGER)
-	private List<Quotes> quotesList = new ArrayList<>();//TODO change key to Date and value to Double
+	private List<Quotes> quotesList = new ArrayList<>();//TODO change key to Date
 
 	@Transient
 	private Map<String, Double> quotes = new HashMap<String, Double>();

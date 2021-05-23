@@ -12,7 +12,6 @@ public class StockDTO {
 
 
 	private String id;
-	//private List<Quotes> quotesList = new ArrayList<>();//TODO change key to Date and value to Double
 	private Map<String, Double> quotes = new HashMap<String, Double>();
 	
 	public StockDTO() {
@@ -47,11 +46,9 @@ public class StockDTO {
 	public Map<String, Double> listMapQuotes(List<Quotes> list){
       Map<String, Double> listObj = new HashMap<>();
       for(int i = 0; i < list.size(); i++) {
-      //	for(int j = 0; j < list.get(i).getQuotes().size(); j++) {
       		String quoteDate =  list.get(i).getQuoteDate();
       		Double quoteValue = list.get(i).getQuoteValue();
       		listObj.put(quoteDate, quoteValue);
-     // 	}
       }
 	return listObj;
 	}

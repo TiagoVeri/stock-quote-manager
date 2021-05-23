@@ -25,7 +25,6 @@ public class StockService {
 	public Stock insertStock(Stock stock) {
 		try {
 			stock.setId(stock.getId().toLowerCase());
-			//TODO Map value convertion to Double
 			return stockRepo.save(stock);
 		} catch (Exception e) {
 			throw new StockIdException("Stock ID '" +stock.getId().toLowerCase() +"' already exists");
@@ -39,14 +38,14 @@ public class StockService {
 
 	}
 
-	public Stock find(String id) {
+	public StockDTO find(String id) {
 		Optional<Stock> stock = stockRepo.findById(id.toLowerCase());
-		
 		if(stock == null) {
 			throw new StockIdException("Stock ID '" + id.toLowerCase() +"' doesn't exist");
 		}
-		return stock.orElseThrow(() -> new ObjectNotFoundException(
-				"O id " + id + " tipo: " + Stock.class.getName() + " não foi encontrato"));
+		StockDTO dto = new StockDTO(stock.get());
+					
+		return dto;
 	}
 
 }

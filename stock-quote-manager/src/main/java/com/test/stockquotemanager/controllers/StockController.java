@@ -27,23 +27,14 @@ public class StockController {
     private StockService stockService;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Stock> findById(@PathVariable String id){
-        Stock obj = stockService.find(id);
+    public ResponseEntity<StockDTO> findById(@PathVariable String id){
+        StockDTO obj = stockService.find(id);
         return ResponseEntity.ok().body(obj);
     }
 
     @GetMapping
     public ResponseEntity<List<StockDTO>> findAll(){
         List<StockDTO> stockList = stockService.findAll();
-//        Map<String, Double> listObj = new HashMap<>();
-//        for(int i = 0; i < stockList.size(); i++) {
-//        	for(int j = 0; j < stockList.get(i).getQuotes().size(); j++) {
-//        		String quoteDate =  stockList.get(i).getQuotes().get(j).getQuoteDate();
-//        		Double quoteValue = stockList.get(i).getQuotes().get(j).getQuoteValue();
-//        		listObj.put(quoteDate, quoteValue);
-//        	}
-//        	stockList.get(i).setQuotesMap(listObj);
-//        }
         return ResponseEntity.ok().body(stockList);
     }
 
