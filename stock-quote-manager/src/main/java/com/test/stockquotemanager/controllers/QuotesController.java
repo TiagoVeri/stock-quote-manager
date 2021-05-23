@@ -7,8 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.test.stockquotemanager.domains.Stock;
-import com.test.stockquotemanager.services.StockService;
+import com.test.stockquotemanager.domains.Quotes;
+import com.test.stockquotemanager.services.QuotesService;
+
 
 import javax.validation.Valid;
 
@@ -16,28 +17,27 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/stock")
-public class StockController {
+@RequestMapping(value = "/quote")
+public class QuotesController {
 	
     @Autowired
-    private StockService stockService;
+    private QuotesService quoteService;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Stock> findById(@PathVariable String id){
-        Stock obj = stockService.find(id);
+    public ResponseEntity<Quotes> findById(@PathVariable Long id){
+        com.test.stockquotemanager.domains.Quotes obj = quoteService.find(id);
         return ResponseEntity.ok().body(obj);
     }
 
     @GetMapping
-    public ResponseEntity<List<Stock>> findAll(){
-        List<Stock> stockList = stockService.findAll();
-        
-        return ResponseEntity.ok().body(stockList);
+    public ResponseEntity<List<Quotes>> findAll(){
+        List<Quotes> QuotesList = quoteService.findAll();
+        return ResponseEntity.ok().body(QuotesList);
     }
 
     @PostMapping
-    public ResponseEntity<Stock> insertStock(@Valid @RequestBody Stock Stock){
-        Stock obj = stockService.insertStock(Stock);
+    public ResponseEntity<Quotes> insertQuotes(@Valid @RequestBody Quotes Quotes){
+        Quotes obj = quoteService.insertQuotes(Quotes);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();

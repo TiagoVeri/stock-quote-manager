@@ -23,7 +23,7 @@ public class StockService {
 	public Stock insertStock(Stock stock) {
 		try {
 			stock.setId(stock.getId().toLowerCase());
-			//TODO Map value convertion to Integer
+			//TODO Map value convertion to Double
 			return stockRepo.save(stock);
 		} catch (Exception e) {
 			throw new StockIdException("Stock ID '" +stock.getId().toLowerCase() +"' already exists");
