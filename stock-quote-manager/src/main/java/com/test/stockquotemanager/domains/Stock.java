@@ -14,8 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.test.stockquotemanager.domains.utils.ArrayMapDeserializer;
@@ -34,10 +36,15 @@ public class Stock implements Serializable {
 	//@ElementCollection(targetClass=ArrayMapDeserializer.class)
 	//@MapKeyColumn(name="Employee_Position")
 	//private Map<String, String> quotes = new HashMap<>();//TODO change key to Date and value to Double
-	@JsonManagedReference
-	@OneToMany(targetEntity=Quotes.class, mappedBy="stock", fetch=FetchType.EAGER)
-	private List<Quotes> quotes = new ArrayList<>();//TODO change key to Date and value to Double
+	
+	//@JsonManagedReference
+	//@JsonIgnore
+	@OneToMany(mappedBy="stock", fetch=FetchType.EAGER)
+	private List<Quotes> quotesList = new ArrayList<>();//TODO change key to Date and value to Double
 
+	@Transient
+	private Map<String, Double> quotes = new HashMap<String, Double>();
+	
 	public Stock() {
 	}
 	
@@ -54,11 +61,28 @@ public class Stock implements Serializable {
 	}
 
 	public  List<Quotes> getQuotes() {
-		return quotes;
+		return quotesList;
 	}
 
 	public void setQuotes(List<Quotes> quotes) {
+		this.quotesList = quotes;
+	}
+	
+	
+	public Map<String, Double> getQuotesMap() {
+		
+		return quotes;
+	}
+
+	public void setQuotesMap(Map<String, Double> quotes) {
 		this.quotes = quotes;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Stock [id=" + id + ", quotes=" + quotes + "]";
 	}
 	
 	

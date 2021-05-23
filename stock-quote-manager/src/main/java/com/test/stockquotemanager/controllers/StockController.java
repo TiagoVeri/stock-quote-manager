@@ -7,13 +7,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.test.stockquotemanager.domains.Quotes;
 import com.test.stockquotemanager.domains.Stock;
+import com.test.stockquotemanager.dto.StockDTO;
 import com.test.stockquotemanager.services.StockService;
 
 import javax.validation.Valid;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/stock")
@@ -29,9 +33,17 @@ public class StockController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Stock>> findAll(){
-        List<Stock> stockList = stockService.findAll();
-        
+    public ResponseEntity<List<StockDTO>> findAll(){
+        List<StockDTO> stockList = stockService.findAll();
+//        Map<String, Double> listObj = new HashMap<>();
+//        for(int i = 0; i < stockList.size(); i++) {
+//        	for(int j = 0; j < stockList.get(i).getQuotes().size(); j++) {
+//        		String quoteDate =  stockList.get(i).getQuotes().get(j).getQuoteDate();
+//        		Double quoteValue = stockList.get(i).getQuotes().get(j).getQuoteValue();
+//        		listObj.put(quoteDate, quoteValue);
+//        	}
+//        	stockList.get(i).setQuotesMap(listObj);
+//        }
         return ResponseEntity.ok().body(stockList);
     }
 

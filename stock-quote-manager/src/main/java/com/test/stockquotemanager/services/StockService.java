@@ -2,11 +2,13 @@ package com.test.stockquotemanager.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.test.stockquotemanager.domains.Stock;
+import com.test.stockquotemanager.dto.StockDTO;
 import com.test.stockquotemanager.repositories.StockRepository;
 import com.test.stockquotemanager.services.exceptions.ObjectNotFoundException;
 import com.test.stockquotemanager.services.exceptions.StockIdException;
@@ -31,8 +33,10 @@ public class StockService {
 
 	}
 
-	public List<Stock> findAll() {
-		return stockRepo.findAll();
+	public List<StockDTO> findAll() {
+		List<Stock> result = stockRepo.findAll();
+		return result.stream().map(x -> new StockDTO(x)).collect(Collectors.toList());
+
 	}
 
 	public Stock find(String id) {
