@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.test.stockquotemanager.domains.Stock;
 import com.test.stockquotemanager.repositories.StockRepository;
 import com.test.stockquotemanager.services.exceptions.ObjectNotFoundException;
+import com.test.stockquotemanager.services.exceptions.StockIdException;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,9 +21,14 @@ public class StockService {
 
 	@Transactional
 	public Stock insertStock(Stock stock) {
-		String id = stock.getId();
-		stock.setId(id.toLowerCase());
-		return stockRepo.save(stock);
+		try {
+			stock.setId(stock.getId().toLowerCase());
+			//TODO Map value convertion to Integer
+			return stockRepo.save(stock);
+		} catch (Exception e) {
+			throw new StockIdException("Stock ID '" +stock.getId().toLowerCase() +"' already exists");
+		}
+
 	}
 
 	public List<Stock> findAll() {
@@ -30,9 +36,11 @@ public class StockService {
 	}
 
 	public Stock find(String id) {
-		id.toLowerCase();
-		Optional<Stock> stock = stockRepo.findById(id);
-
+		Optional<Stock> stock = stockRepo.findById(id.toLowerCase());
+		
+		if(stock == null) {
+			throw new StockIdException("Stock ID '" + id.toLowerCase() +"' doesn't exist");
+		}
 		return stock.orElseThrow(() -> new ObjectNotFoundException(
 				"O id " + id + " tipo: " + Stock.class.getName() + " não foi encontrato"));
 	}

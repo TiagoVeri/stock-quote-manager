@@ -1,5 +1,6 @@
 package com.test.stockquotemanager.domains;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,8 +10,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_stock")
-public class Stock {
-	
+public class Stock implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	private String id;
 	
